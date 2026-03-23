@@ -267,6 +267,194 @@ textarea:focus {
 }
 
 /* ── Cards ───────────────────────────────────────────────────────── */
+/* ── View mode toggle ────────────────────────────────────────────── */
+.view-mode-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.view-mode-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: var(--text-2);
+  transition: all var(--transition);
+  line-height: 1;
+}
+
+.view-mode-btn:hover {
+  color: var(--text-0);
+}
+
+.view-mode-btn.active {
+  background: var(--accent-triage);
+  color: #fff;
+}
+
+/* ── List mode board ─────────────────────────────────────────────── */
+.board--list {
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  gap: 20px;
+}
+
+.board--list .column--list {
+  flex: none;
+  min-width: unset;
+  width: 100%;
+  height: auto;
+}
+
+.board--list .column-body {
+  overflow-y: visible;
+}
+
+/* ── List rows ───────────────────────────────────────────────────── */
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all var(--transition);
+  min-width: 0;
+}
+
+.list-row:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-bright);
+}
+
+.list-row-icon {
+  font-size: .85rem;
+  flex-shrink: 0;
+}
+
+.list-row-title {
+  flex: 1;
+  font-size: .83rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-0);
+}
+
+.list-row-project {
+  flex-shrink: 0;
+  font-size: .62rem;
+}
+
+.list-row-researching {
+  color: var(--accent-research);
+  flex-shrink: 0;
+  animation: pulse 1.4s ease infinite;
+}
+
+.list-row-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-xs {
+  padding: .2rem .5rem !important;
+  font-size: .72rem !important;
+}
+
+.btn-danger {
+  color: #ff6b6b;
+  border: 1.5px solid rgba(255, 107, 107, .3);
+}
+
+.btn-danger:hover, .btn-danger.confirming {
+  background: rgba(255, 107, 107, .15);
+  border-color: #ff6b6b;
+}
+
+/* ── Project groups (backlog) ────────────────────────────────────── */
+.project-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  background: rgba(79, 195, 247, .06);
+  border: 1px solid rgba(79, 195, 247, .12);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--accent-connect);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background var(--transition);
+}
+
+.project-group-header:hover {
+  background: rgba(79, 195, 247, .12);
+}
+
+.project-group-chevron {
+  font-size: .6rem;
+}
+
+.project-group-label {
+  flex: 1;
+}
+
+/* ── Card delete button ──────────────────────────────────────────── */
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.card-title-row .card-title {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.btn-delete {
+  flex-shrink: 0;
+  font-size: .85rem;
+  line-height: 1;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--text-2);
+  opacity: 0;
+  transition: all var(--transition);
+}
+
+.card:hover .btn-delete {
+  opacity: 1;
+}
+
+.btn-delete:hover, .btn-delete.confirming {
+  background: rgba(255, 107, 107, .15);
+  color: #ff6b6b;
+  opacity: 1;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────── */
 .card {
   background: var(--bg-card);
   border: 1.5px solid var(--border);
@@ -289,7 +477,6 @@ textarea:focus {
   font-size: .88rem;
   font-weight: 600;
   line-height: 1.4;
-  margin-bottom: 6px;
   color: var(--text-0);
 }
 
@@ -557,4 +744,57 @@ textarea:focus {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
+}
+
+/* ── View Toggle ─────────────────────────────────────────────────── */
+.view-toggle {
+  display: flex;
+  gap: 2px;
+  background: var(--bg-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.view-toggle-btn {
+  padding: .3rem .85rem;
+  border-radius: calc(var(--radius-sm) - 2px);
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-2);
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+
+.view-toggle-btn:hover {
+  color: var(--text-1);
+}
+
+.view-toggle-btn.active {
+  background: var(--bg-card);
+  color: var(--accent-research);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .3);
+}
+
+/* ── Roadmap View ────────────────────────────────────────────────── */
+.app-shell--roadmap {
+  grid-template-areas:
+    "header header"
+    "board  board";
+}
+
+.roadmap-view {
+  grid-area: board;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .app-shell--roadmap {
+    grid-template-areas:
+      "header"
+      "board";
+  }
 }

@@ -27,6 +27,9 @@ export const api = {
     listItems: (state?: string) =>
         req<Item[]>(`/items/${USER_ID}${state ? `?state=${state}` : ''}`),
 
+    deleteItem: (item_id: string) =>
+        req<void>(`/items/${USER_ID}/${item_id}`, { method: 'DELETE' }),
+
     // Capture (Triage Agent)
     capture: (input: { raw_text?: string; url?: string }) =>
         req<Item>('/capture', {

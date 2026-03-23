@@ -9,6 +9,7 @@ import InsightSidebar from './components/InsightSidebar';
 import StaleNotification, { getStaleItems } from './components/StaleNotification';
 
 const COLUMNS: Item['state'][] = ['brain_dump', 'backlog', 'in_progress', 'done'];
+type ViewMode = 'board' | 'list';
 
 // Persist dismissed stale item IDs in sessionStorage so they don't reappear
 // in the same browser session.
@@ -23,6 +24,7 @@ export default function App() {
   const [selected, setSelected] = useState<Item | null>(null);
   const [loading, setLoading] = useState(true);
   const [dismissed, setDismissed] = useState<Set<string>>(getDismissed);
+  const [viewMode, setViewMode] = useState<ViewMode>('board');
 
   useEffect(() => {
     api.listItems()
@@ -71,6 +73,12 @@ export default function App() {
     });
   };
 
+  const handleDelete = async (itemId: string) => {
+    await api.deleteItem(itemId);
+    setItems(prev => prev.filter(it => it.item_id !== itemId));
+    if (selected?.item_id === itemId) setSelected(null);
+  };
+
   const itemsForColumn = (state: Item['state']) =>
     items.filter(it => it.state === state);
 
@@ -82,10 +90,22 @@ export default function App() {
       <header className="topbar" role="banner">
         <span className="topbar-logo">🧠 LearningOS</span>
         <CaptureBar onCapture={handleCapture} />
+        <div className="view-mode-toggle" role="group" aria-label="View mode">
+          <button
+            className={`view-mode-btn${viewMode === 'board' ? ' active' : ''}`}
+            onClick={() => setViewMode('board')}
+            title="Board view"
+          >⊞</button>
+          <button
+            className={`view-mode-btn${viewMode === 'list' ? ' active' : ''}`}
+            onClick={() => setViewMode('list')}
+            title="List view"
+          >☰</button>
+        </div>
       </header>
 
       {/* Kanban board */}
-      <main className="board" aria-label="Learning Kanban Board">
+      <main className={viewMode === 'list' ? 'board board--list' : 'board'} aria-label="Learning Kanban Board">
         {loading ? (
           <p style={{ color: 'var(--text-2)', alignSelf: 'center', margin: 'auto' }}>
             Loading your board…
@@ -98,6 +118,8 @@ export default function App() {
               items={itemsForColumn(state)}
               onCardClick={setSelected}
               onCardMoved={handleCardMoved}
+              onDelete={handleDelete}
+              viewMode={viewMode}
             />
           ))
         )}
