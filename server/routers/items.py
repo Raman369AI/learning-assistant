@@ -15,9 +15,10 @@ async def get_items(user_id: str, state: str | None = None) -> list[Item]:
     return await list_items(user_id, state)
 
 
-@router.delete("/{user_id}/{item_id}", status_code=204)
-async def remove_item(user_id: str, item_id: str) -> None:
+@router.delete("/{user_id}/{item_id}")
+async def remove_item(user_id: str, item_id: str) -> dict:
     """Permanently delete an item."""
     deleted = await delete_item(item_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Item not found")
+    return {"deleted": item_id}
