@@ -16,8 +16,9 @@ from routers import capture, research, clarify, digest, items, connect, resurfac
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: nothing blocking required; Firestore client is lazy.
+    from seed_roadmap import seed_roadmap
     print("🚀 Learning Assistant API starting up…")
+    await seed_roadmap()
     yield
     print("🛑 Learning Assistant API shutting down…")
 
